@@ -12,7 +12,7 @@ import 'package:oauth2/oauth2.dart';
 import 'package:pathos/path.dart' as path;
 
 import 'http.dart';
-import 'io.dart';
+import 'io.dart' as io;
 import 'log.dart' as log;
 import 'system_cache.dart';
 import 'utils.dart';
@@ -93,9 +93,9 @@ class OAuth2Console {
   void clearCredentials(SystemCache cache) {
     _credentials = null;
     var credentialsFile = _credentialsFile(cache);
-    if (!fileExists(credentialsFile)) return;
+    if (!io.fileExists(credentialsFile)) return;
 
-    deleteFile(credentialsFile);
+    io.deleteFile(credentialsFile);
   }
 
   /// Close the httpClient when were done.
@@ -164,7 +164,7 @@ class OAuth2Console {
       var path = _credentialsFile(cache);
       if (!fileExists(path)) return null;
 
-      var credentials = new Credentials.fromJson(readTextFile(path));
+      var credentials = new Credentials.fromJson(io.readTextFile(path));
       if (credentials.isExpired && !credentials.canRefresh) {
         log.error("Authorization has expired and "
         "can't be automatically refreshed.");
@@ -185,8 +185,8 @@ class OAuth2Console {
     log.fine('Saving OAuth2 credentials.');
     _credentials = credentials;
     var credentialsPath = _credentialsFile(cache);
-    ensureDir(path.dirname(credentialsPath));
-    writeTextFile(credentialsPath, credentials.toJson(), dontLogContents: true);
+    io.ensureDir(path.dirname(credentialsPath));
+    io.writeTextFile(credentialsPath, credentials.toJson(), dontLogContents: true);
   }
 
   /// The path to the file in which the user's OAuth2 credentials are stored.

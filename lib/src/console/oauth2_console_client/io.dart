@@ -65,6 +65,11 @@ String writeTextFile(String file, String contents, {dontLogContents: false}) {
   return file;
 }
 
+/// Deletes [file].
+void deleteFile(String file) {
+  new File(file).deleteSync();
+}
+
 /// Creates [file] and writes [contents] to it.
 String writeBinaryFile(String file, List<int> contents) {
   log.io("Writing ${contents.length} bytes to binary file $file.");
