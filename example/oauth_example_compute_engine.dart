@@ -15,10 +15,10 @@ void main(args) {
 }
 
 Future _clientCallback(http.Client client) {
-  final url = "https://www.googleapis.com/plus/v1/people/me";
+  final url = "https://storage.googleapis.com";
   return client.get(url).then((http.Response response) {
     var data = JSON.decode(response.body);
-    var c = "Logged in as ${data["displayName"]}";
+    var c = "data = ${data}";
     print(c);
     return c;
   });
