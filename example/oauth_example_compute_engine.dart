@@ -1,5 +1,4 @@
 import "dart:async";
-import "dart:convert";
 import "package:google_oauth2_client/google_oauth2_console.dart";
 import "package:http/http.dart" as http;
 
@@ -17,7 +16,7 @@ void main(args) {
 Future _clientCallback(http.Client client) {
   final url = "https://storage.googleapis.com";
   return client.get(url).then((http.Response response) {
-    var data = JSON.decode(response.body);
+    var data = response.body;
     var c = "data = ${data}";
     print(c);
     return c;
