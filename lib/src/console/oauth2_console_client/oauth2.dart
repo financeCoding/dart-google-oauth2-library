@@ -346,9 +346,9 @@ class ComputeOAuth2Console implements OAuth2Console {
     log.fine("withClient(Future ${fn}(Client client))");
 
     if (this.privateKey == null && this.iss == null && this.scopes == null) {
-      _simpleHttpClient = new OtherPlatformClient(projectId, privateKey, iss, scopes);
-    } else {
       _simpleHttpClient = new ComputeEngineClient(projectId);
+    } else {
+      _simpleHttpClient = new OtherPlatformClient(projectId, privateKey, iss, scopes);
     }
 
     return fn(_simpleHttpClient);
