@@ -387,6 +387,32 @@ class ComputeOAuth2Console implements OAuth2Console {
   PubHttpClient _httpClient;
 }
 
+class OtherPlatformClient extends http.BaseClient implements Client {
+  final String identifier = "";
+  final String secret = "";
+  final String projectId;
+  Credentials get credentials => _credentials;
+  Credentials _credentials;
+  http.Client _httpClient;
+
+  final privateKey;
+  final iss;
+  final scopes;
+  // TODO: use JWTStore, it handles the refreshing of expired tokens in a simple way.
+  OtherPlatformClient(this.projectId, this.privateKey, this.iss, this.scopes);
+
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+  }
+
+  Future<Client> refreshCredentials([List<String> newScopes]) {
+  }
+
+  void close() {
+    if (_httpClient != null) _httpClient.close();
+    _httpClient = null;
+  }
+}
+
 class ComputeEngineClient extends http.BaseClient implements Client {
   final String identifier = "";
   final String secret = "";
@@ -416,6 +442,7 @@ class ComputeEngineClient extends http.BaseClient implements Client {
     });
   }
 
+  // TODO: use a token store instead of fetching each time. Checkout JWTStore.
   Future<Client> refreshCredentials([List<String> newScopes]) {
     return async.then((_) {
       return _httpClient.get(_tokenEndpoint,
